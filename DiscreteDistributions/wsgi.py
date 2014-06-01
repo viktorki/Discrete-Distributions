@@ -1,5 +1,5 @@
 """
-WSGI config for DiscreteDistributions2 project.
+WSGI config for DiscreteDistributions project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 
