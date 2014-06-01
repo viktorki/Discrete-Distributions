@@ -1,4 +1,4 @@
-class DiscreteRandomVariable(object):
+class DiscreteRandomVariable:
     def __init__(self, distribution):
         self.distribution = distribution
         self.expectation = 0
