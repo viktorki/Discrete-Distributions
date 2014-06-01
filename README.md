@@ -10,5 +10,5 @@ The application has two main functionalities:
 <ul>
 <li>Implementing classes for working with random variables.</li>
 <li>Implementing classes for working with discrete distributions.</li>
-<li>Implementing model of a problem (which contains fields for the problem statement, author, example solution, etc.).</li>
+<li>Implementing model of a statistics problem (which contains fields for the problem statement, author, example solution, etc.).</li>
 </ul>
