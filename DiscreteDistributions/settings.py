@@ -47,9 +47,9 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
-ROOT_URLCONF = 'DiscreteDistributions2.urls'
+ROOT_URLCONF = 'DiscreteDistributions.urls'
 
-WSGI_APPLICATION = 'DiscreteDistributions2.wsgi.application'
+WSGI_APPLICATION = 'DiscreteDistributions.wsgi.application'
 
 
 # Database
