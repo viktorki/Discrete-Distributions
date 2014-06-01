@@ -23,6 +23,7 @@ class BinomialDistribution(DiscreteDistribution):
         self.n = n
         self.p = p
         self.q = 1 - p
+        self.id = 1
 
 
 class BernoulliDistribution(DiscreteDistribution):
@@ -30,6 +31,7 @@ class BernoulliDistribution(DiscreteDistribution):
         DiscreteDistribution.__init__(self, lambda k: p ** k * (1 - p) ** (1 - k), p, p * (1 - p))
         self.p = p
         self.q = 1 - p
+        self.id = 2
 
 
 class GeometricDistribution(DiscreteDistribution):
@@ -37,6 +39,7 @@ class GeometricDistribution(DiscreteDistribution):
         DiscreteDistribution.__init__(self, lambda k: p * (1 - p) ** k, (1 - p) / p, (1 - p) / (p ** 2))
         self.p = p
         self.q = 1 - p
+        self.id = 3
 
 
 class NegativeBinomialDistribution(DiscreteDistribution):
@@ -45,6 +48,7 @@ class NegativeBinomialDistribution(DiscreteDistribution):
         self.r = r
         self.p = p
         self.q = 1 - p
+        self.id = 4
 
 
 class HypergeometricDistribution(DiscreteDistribution):
@@ -53,9 +57,10 @@ class HypergeometricDistribution(DiscreteDistribution):
         self.N = N
         self.M = M
         self.n = n
-
+        self.id = 5
 
 class PoissonDistribution(DiscreteDistribution):
     def __init__(self, mu):
         DiscreteDistribution.__init__(self, lambda k: mu ** k * math.e ** (-mu) / math.factorial(k), mu, mu)
         self.mu = mu
+        self.id = 6
