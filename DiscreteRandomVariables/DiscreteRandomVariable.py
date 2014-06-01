@@ -1,20 +1,25 @@
+from DiscreteRandomVariables.DiscreteDistribution import *
+import random
 class DiscreteRandomVariable:
     def __init__(self, distribution):
-        self.distribution = distribution
-        self.expectation = 0
-        for value, probability in distribution.items():
-            self.expectation += value * probability
-        self.variance = 0
-        for value, probability in distribution.items():
-            self.variance += (value - self.expectation) ** 2 * probability
+        self.custom_distribution = distribution.custom
+        self.probability_density_function = distribution.probability_density_function
+        self.expectation = distribution.expectation
+        self.variance = distribution.variance
         self.standard_deviation = self.variance ** 0.5
-
-    def getExpectation(self):
-        return self.expectation
-
-    def getVariance(self):
-        return self.variance
-
-    def getStandardDeviation(self):
-        return self.standard_deviation
     
+    def getPossibleValue(self):
+        generated = random.random()
+        probability_distribution = 0
+        if self.custom_distribution:
+            for value, probability in self.probability_density_function.items():
+                probability_distribution += probability
+                if probability_distribution >= generated:
+                    return value
+        else:
+            current = 0
+            while(True):
+                probability_distribution += self.probability_density_function(current)
+                if probability_distribution >= generated:
+                    return current
+                current += 1
