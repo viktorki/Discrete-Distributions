@@ -5,3 +5,6 @@ class Problem(models.Model):
     problem_statement = models.TextField()
     solution = models.TextField()
     distribution_id = models.IntegerField()
+    distribution_parameter1 = models.FloatField()
+    distribution_parameter2 = models.FloatField()
+    distribution_parameter3 = models.FloatField()
