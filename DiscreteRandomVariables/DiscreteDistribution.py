@@ -1,3 +1,4 @@
+import math
 from Utility.Math import Combinatorics
 class DiscreteDistribution:
     def __init__(self, probability_density_function, expectation = 0, variance = 0):
@@ -36,3 +37,25 @@ class GeometricDistribution(DiscreteDistribution):
         DiscreteDistribution.__init__(self, lambda k: p * (1 - p) ** k, (1 - p) / p, (1 - p) / (p ** 2))
         self.p = p
         self.q = 1 - p
+
+
+class NegativeBinomialDistribution(DiscreteDistribution):
+    def __init__(self, r, p):
+        DiscreteDistribution.__init__(self, lambda k: Combinatorics.c(k - 1, r - 1) * p ** r * (1 - p) ** (k - r), r / p, r * (1 - p) / (p ** 2))
+        self.r = r
+        self.p = p
+        self.q = 1 - p
+
+
+class HypergeometricDistribution(DiscreteDistribution):
+    def __init__(self, N, M, n):
+        DiscreteDistribution.__init__(self, lambda k: Combinatorics.c(M, k) * Combinatorics.c(N - M, n - k) / Combinatorics.c(N, n), n * M / N, n * M * (N - M) * (N - n) / (N ** 2 * (N - 1)))
+        self.N = N
+        self.M = M
+        self.n = n
+
+
+class PoissonDistribution(DiscreteDistribution):
+    def __init__(self, mu):
+        DiscreteDistribution.__init__(self, lambda k: mu ** k * math.e ** (-mu) / math.factorial(k), mu, mu)
+        self.mu = mu
