@@ -1,5 +1,5 @@
 """
-Django settings for DiscreteDistributions project.
+Django settings for DiscreteDistributions2 project.
 
 For more information on this file, see
 https://docs.djangoproject.com/en/1.6/topics/settings/
@@ -17,7 +17,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 # See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '_%tl^#da1m83q0^gjlu*$(%!2y$ok92(y7aqo*ku=jsiwozr@r'
+SECRET_KEY = '+gm=c58-iz324d=t9##i%&1*(*9(!wv3440p)cf7unsxm6ftq*'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -47,9 +47,9 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
-ROOT_URLCONF = 'DiscreteDistributions.urls'
+ROOT_URLCONF = 'DiscreteDistributions2.urls'
 
-WSGI_APPLICATION = 'DiscreteDistributions.wsgi.application'
+WSGI_APPLICATION = 'DiscreteDistributions2.wsgi.application'
 
 
 # Database
