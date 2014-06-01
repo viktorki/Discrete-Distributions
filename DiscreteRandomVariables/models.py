@@ -1,3 +1,7 @@
 from django.db import models
 
-# Create your models here.
+class Problem(models.Model):
+    problem_title = models.CharField()
+    problem_statement = models.TextField()
+    solution = models.TextField()
+    distribution_id = models.IntegerField()
