@@ -1,0 +1,134 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Преглед на задачите</title>
+
+<meta name="Description" content="" />
+<meta name="author" content="" />
+<meta name="keywords" content="" />
+
+<meta name="robots" content="all,follow" />
+
+{% load staticfiles %}
+
+<!-- CSS --> 
+<link rel="stylesheet" href="{% static "styles/default.css" %}" type="text/css" media="screen, projection, tv" />
+<link rel="stylesheet" href="{% static "styles/print.css" %}" type="text/css" media="print" />
+
+<!-- Favicon -->
+<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+</head>
+
+<body id="top">
+<div id="wrapper">
+
+	<div class="header">
+	<h1><span><a href="">Дискретни разпределения</span></h1>
+	<p id="about">Уеб приложение за работа със случайни величини</p>
+
+	<a href="#skip-menu" class="hidden">Skip menu</a> <!-- Skip menu -->
+	<div id="menu-box"><ul id="web"><li><a href="#">Ресурси</a></li> <li><a class="active" id="first" href="../">Начало</a></li></ul></div>
+
+	<form class="searching" action="">
+		<fieldset>
+			<label></label>
+				<input type="text" name="as_q" class="search" />
+				<input class="hledat" type="submit" name="" value="Търсене" />
+		</fieldset>
+	</form>
+	</div> <!-- Header end -->
+
+<hr class="noscreen" />
+
+<div id="skip-menu"></div>
+	<div class="page">
+		<div class="col-r">
+		<div class="col-r-in">
+		<h2>Преглед на задачите</h2>
+		<table>
+		<r>
+		<th>№</th>
+		<th>Задача</th>
+		<th>Редактиране</th>
+		<th>Изтриване</th>
+		</tr>
+		{% for problem in problems %}
+			<tr>
+			<td>{{ problem.id }}</td>
+			<td><a href="/view_problem/?problem_id={{ problem.id }}">{{ problem.problem_title }}</a></td>
+			<td><center><a href="/edit_problem/?problem_id={{ problem.id }}"><img src="{% static "img/edit.png" %}" width="16" /></a></center></td>
+			<td><center><a href="/delete_problem/?problem_id={{ problem.id }}"><img src="{% static "img/delete.png" %}" width="16" /></a></center></td>
+			<td></td>
+			</tr>
+		{% endfor %}
+		</table>
+		<p>Praesent pharetra, risus non vehicula rutrum, elit dui tincidunt felis, eu iaculis urna dolor non purus. Praesent eget orci. 
+		Praesent aliquet. Vestibulum ante <a href="#">ipsum primis</a> in faucibus orci luctus et ultrices posuere cubilia Curae; Nulla purus. 
+		Nullam quam enim, congue tempor, gravida id, suscipit eget, magna. Donec urna. Aliquam est purus, condimentum nec, rutrum ac, vulputate sit amet, justo. 
+		Etiam dui. Nam vulputate. Maecenas placerat ultricies massa. Nam nisi. Nullam dignissim, odio dignissim accumsan fermentum, sapien magna porttitor orci, 
+		non lacinia elit pede id dui. Sed sit amet massa vitae tellus adipiscing laoreet.</p>
+
+<hr class="noscreen" />
+<br />
+
+		<h3><span>Latest articles</span></h3>
+		<div class="article"><p>Nulla facilisi. Etiam dictum libero et purus. In tincidunt accumsan nibh. Morbi nibh diam, ornare eget, sollicitudin ut, facilisis eu, eros. 
+		Vivamus augue. Phasellus non pede. Phasellus massa est, mattis sed, pharetra non, mollis sit amet, purus&hellip;</p>
+		<a class="more" href="#">Read more</a>
+		</div>
+
+		<div class="article-zebra"><p>Nulla facilisi. Etiam dictum libero et purus. In tincidunt accumsan nibh. Morbi nibh diam, ornare eget, sollicitudin ut, facilisis eu, eros. 
+		Vivamus augue. Phasellus non pede. Phasellus massa est, mattis sed, pharetra non, mollis sit amet, purus&hellip;</p>
+		<a class="more" href="#">Read more</a>
+		</div>
+
+		<div class="article"><p>Nulla facilisi. Etiam dictum libero et purus. In tincidunt accumsan nibh. Morbi nibh diam, ornare eget, sollicitudin ut, facilisis eu, eros. 
+		Vivamus augue. Phasellus non pede. Phasellus massa est, mattis sed, pharetra non, mollis sit amet, purus&hellip;</p>
+		<a class="more" href="#">Read more</a>
+		</div>
+
+		<div class="article-zebra"><p>Nulla facilisi. Etiam dictum libero et purus. In tincidunt accumsan nibh. Morbi nibh diam, ornare eget, sollicitudin ut, facilisis eu, eros. 
+		Vivamus augue. Phasellus non pede. Phasellus massa est, mattis sed, pharetra non, mollis sit amet, purus&hellip;</p>
+		<a class="more" href="#">Read more</a>
+		</div>
+
+<hr class="noscreen" />
+<br />
+
+		<h3><span>Newest photos</span></h3>
+		<div class="gallery">
+		<a href="#"><img src="img/image.jpg" alt="" width="120" height="90" /></a>
+		<a href="#"><img src="img/image.jpg" alt="" width="120" height="90" /></a>
+		<a href="#"><img src="img/image.jpg" alt="" width="120" height="90" /></a>
+		<a href="#"><img src="img/image.jpg" alt="" width="120" height="90" /></a>
+		</div>
+
+		</div>
+		</div> <!-- Right column end -->
+
+{% include "menu.html" %}
+
+<div class="cleaner">&nbsp;</div>
+
+	</div> <!-- Page end -->
+
+	<div id="footer">
+		<ul>
+			<li><a href="">Home</a>|</li>
+			<li><a href="#">About</a>|</li>
+			<li><a href="#">Gallery</a>|</li>
+			<li><a href="#">Contact</a></li>
+		</ul>
+
+	<p><a href="#" onclick="print();" title="Javascript needed for a Print">Print</a> | <a href="#top">Top</a>&uarr;</p>
+	</div> <!-- Footer end -->
+
+</div> <!-- Wrapper end -->
+
+<p id="backlinks"><a href="http://www.pestujemeweb.cz/">PД›stujeme web</a> | visit: <a href="http://www.junglegym.cz/" title="Skluzavky Jungle Gym">Skluzavky</a></p>
+
+<div style="margin: 1em 0 1em 0; text-align: center;">
+</div>
+</body>
+</html>
