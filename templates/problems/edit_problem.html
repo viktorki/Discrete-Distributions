@@ -53,7 +53,7 @@
 		<br />
 		Условие:
 		<br />
-		<textarea rows="25" cols="75" name="problem_statement">{{ problem.problem_statement }}</textarea>
+		<textarea rows="15" cols="75" name="problem_statement">{{ problem.problem_statement }}</textarea>
 		<br />
 		За решение на задачата се използва:
 		<select name="distribution_id" id="distribution">
@@ -65,9 +65,9 @@
 		<option value="6">Поасоново разпределение</option>
 		</select>
 		<br />
-		<label for="parameter1"></label><input type="text" id="parameter1" name="distribution_parameter1" />
-		<label for="parameter2"></label><input type="text" id="parameter2" name="distribution_parameter2" />
-		<label for="parameter3"></label><input type="text" id="parameter3" name="distribution_parameter3" />
+		<label for="parameter1"></label><input type="text" id="parameter1" name="distribution_parameter1" value="{{ problem.distribution_parameter1 }}" />
+		<label for="parameter2"></label><input type="text" id="parameter2" name="distribution_parameter2" value="{{ problem.distribution_parameter2 }}" />
+		<label for="parameter3"></label><input type="text" id="parameter3" name="distribution_parameter3" value="{{ problem.distribution_parameter3 }}" />
 		<br />
 		<input type="submit" value="Запази" />
 		</form>
@@ -143,6 +143,7 @@
 
 <script>
 	$(function() {
+		$("#distribution").val("{{ problem.distribution_id }}");
 		$("#distribution").trigger("change");
 	});
 
@@ -154,6 +155,8 @@
 			$("label[for=parameter3]").empty();
 			$("#parameter2").hide();
 			$("#parameter3").hide();
+			$("#parameter2").val("");
+			$("#parameter3").val("");
 			break;
 		case '2':
 			$("label[for=parameter1]").text("n = ");
@@ -161,6 +164,7 @@
 			$("label[for=parameter3]").empty();
 			$("#parameter2").show();
 			$("#parameter3").hide();
+			$("#parameter3").val("");
 			break;
 		case '3':
 			$("label[for=parameter1]").text("p = ");
@@ -168,6 +172,8 @@
 			$("label[for=parameter3]").empty();
 			$("#parameter2").hide();
 			$("#parameter3").hide();
+			$("#parameter2").val("");
+			$("#parameter3").val("");
 			break;
 		case '4':
 			$("label[for=parameter1]").text("r = ");
@@ -175,6 +181,7 @@
 			$("label[for=parameter3]").empty();
 			$("#parameter2").show();
 			$("#parameter3").hide();
+			$("#parameter3").val("");
 			break;
 		case '5':
 			$("label[for=parameter1]").text("N = ");
@@ -189,6 +196,8 @@
 			$("label[for=parameter3]").empty();
 			$("#parameter2").hide();
 			$("#parameter3").hide();
+			$("#parameter2").val("");
+			$("#parameter3").val("");
 		}
 	});
 </script>
