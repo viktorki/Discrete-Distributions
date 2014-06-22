@@ -1,0 +1,57 @@
+{% load staticfiles %}
+
+<form action="/bernoulli_trial/" method="post">
+{% csrf_token %}
+Брой монети: <input type="text" name="count" value="{{ count }}" />
+<br />
+Тип монета:
+<br />
+<input type="radio" name="isFair" value="true" checked>Правилна</input>
+<br />
+<input type="radio" name="isFair" value="false">Неправилна</input>
+<br />
+p = <input type="text" name="probability" id="probability" value="0.5" disabled="disabled" />
+<br />
+<input type="submit" value="Започни опита" id="submit" />
+</form>
+
+{% for id, result in trials %}
+	{% if result == 1 %}
+		<img src="{% static "img/coin_obverse.png" %}" id="{{ id }}" width="100" hidden="true" />
+	{% else %}
+		<img src="{% static "img/coin_reverse.png" %}" id="{{ id }}" width="100" hidden="true" />
+	{% endif %}
+{% endfor %}
+
+<br />
+<input type="button" id="next" value="Хвърли" />
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script>
+	$(function() {
+		current = 0;
+	});
+	
+	$("input[name=isFair]").change(function() {
+		if($("input[name=isFair]:checked").val() == "true") {
+			$("#probability").val("0.5");
+			$("#probability").attr("disabled", "disabled");
+			
+		}
+		else {
+			$("#probability").val("");
+			$("#probability").removeAttr("disabled");
+		}
+	});
+	
+	$("#submit").click(function() {
+		$("#probability").removeAttr("disabled");
+	});
+	
+	$("#next").click(function() {
+		$("#" + current).show();
+		current++;
+	});
+</script>
+
+<!--http://www.youtube.com/watch?v=AB_4Inw_5WI&list=PL1F960B9AB6A4DD90-->
