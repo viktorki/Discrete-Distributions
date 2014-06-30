@@ -4,9 +4,6 @@ from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns("",
-    # Examples:
-    # url(r'^$', 'DiscreteDistributions.views.home', name='home'),
-    # url(r'^blog/', include('blog.urls')),
 
     url(r"^admin/", include(admin.site.urls)),
     
@@ -23,9 +20,13 @@ urlpatterns = patterns("",
     #Random variables
     url(r"^calculator/", "DiscreteRandomVariables.views.calculator"),
     url(r"^generate_sample/", "DiscreteRandomVariables.views.generateSample"),
+    url(r"^bivariate_distribution/", "DiscreteRandomVariables.views.bivariateDistribution"),
     
-    #Simulations
-    url(r"^bernoulli_trial/", "DiscreteRandomVariables.views.bernoulliTrial"),
-    url(r"^light_bulb_test/", "DiscreteRandomVariables.views.lightBulbTest"),
-    url(r"^typewriter", "DiscreteRandomVariables.views.typewriter")
+    #Discrete Distributions
+    url(r"^bernoulli_distribution/", "DiscreteRandomVariables.views.bernoulliDistribution"),
+    url(r"^binomial_distribution/", "DiscreteRandomVariables.views.binomialDistribution"),
+    url(r"^negative_binomial_distribution/", "DiscreteRandomVariables.views.negativeBinomialDistribution"),
+    url(r"^geometric_distribution/", "DiscreteRandomVariables.views.geometricDistribution"),
+    url(r"^hypergeometric_distribution/", "DiscreteRandomVariables.views.hypergeometricDistribution"),
+    url(r"^poisson_distribution", "DiscreteRandomVariables.views.poissonDistribution")
 )
