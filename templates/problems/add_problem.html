@@ -1,25 +1,18 @@
 ﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Преглед на задачите</title>
-
-<meta name="Description" content="" />
-<meta name="author" content="" />
-<meta name="keywords" content="" />
-
 <meta name="robots" content="all,follow" />
+
+<title>Преглед на задачите</title>
 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 
 {% load staticfiles %}
 
-<!-- CSS --> 
 <link rel="stylesheet" href="{% static "styles/default.css" %}" type="text/css" media="screen, projection, tv" />
 <link rel="stylesheet" href="{% static "styles/print.css" %}" type="text/css" media="print" />
-
-<!-- Favicon -->
-<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
 </head>
 
 <body id="top">
@@ -50,68 +43,28 @@
 		<h2>Добавяне на нова задача</h2>
 		<form action="/add_problem/" method="post">
 		{% csrf_token %}
-		Заглавие: <input type="text" name="problem_title" />
+		{{ error_message }}
+		<br />
+		Заглавие: {{ form.problem_title }}
 		<br />
 		Условие:
 		<br />
-		<textarea rows="15" cols="75" name="problem_statement"></textarea>
+		{{ form.problem_statement }}
 		<br />
-		За решение на задачата се използва:
-		<select name="distribution_id" id="distribution">
-		<option value="1">Бернулиево разпределение</option>
-		<option value="2">Биномно разпределение</option>
-		<option value="3">Геометрично разпределение</option>
-		<option value="4">Отрицателно биномно разпределение</option>
-		<option value="5">Хипергеометрично разпределение</option>
-		<option value="6">Поасоново разпределение</option>
-		</select>
+		За решение на задачата се използва: {{ form.distribution_id }}
 		<br />
-		<label for="parameter1"></label><input type="text" id="parameter1" name="distribution_parameter1" />
-		<label for="parameter2"></label><input type="text" id="parameter2" name="distribution_parameter2" />
-		<label for="parameter3"></label><input type="text" id="parameter3" name="distribution_parameter3" />
+		<div id="parameters">
+			<label for="parameter1"></label>{{ form.distribution_parameter1 }}
+			<label for="parameter2"></label>{{ form.distribution_parameter2 }}
+			<label for="parameter3"></label>{{ form.distribution_parameter3 }}
+		</div>
 		<br />
 		<input type="submit" value="Запази" />
 		</form>
-		<p>Praesent pharetra, risus non vehicula rutrum, elit dui tincidunt felis, eu iaculis urna dolor non purus. Praesent eget orci. 
-		Praesent aliquet. Vestibulum ante <a href="#">ipsum primis</a> in faucibus orci luctus et ultrices posuere cubilia Curae; Nulla purus. 
-		Nullam quam enim, congue tempor, gravida id, suscipit eget, magna. Donec urna. Aliquam est purus, condimentum nec, rutrum ac, vulputate sit amet, justo. 
-		Etiam dui. Nam vulputate. Maecenas placerat ultricies massa. Nam nisi. Nullam dignissim, odio dignissim accumsan fermentum, sapien magna porttitor orci, 
-		non lacinia elit pede id dui. Sed sit amet massa vitae tellus adipiscing laoreet.</p>
 
 <hr class="noscreen" />
 <br />
 
-		<h3><span>Latest articles</span></h3>
-		<div class="article"><p>Nulla facilisi. Etiam dictum libero et purus. In tincidunt accumsan nibh. Morbi nibh diam, ornare eget, sollicitudin ut, facilisis eu, eros. 
-		Vivamus augue. Phasellus non pede. Phasellus massa est, mattis sed, pharetra non, mollis sit amet, purus&hellip;</p>
-		<a class="more" href="#">Read more</a>
-		</div>
-
-		<div class="article-zebra"><p>Nulla facilisi. Etiam dictum libero et purus. In tincidunt accumsan nibh. Morbi nibh diam, ornare eget, sollicitudin ut, facilisis eu, eros. 
-		Vivamus augue. Phasellus non pede. Phasellus massa est, mattis sed, pharetra non, mollis sit amet, purus&hellip;</p>
-		<a class="more" href="#">Read more</a>
-		</div>
-
-		<div class="article"><p>Nulla facilisi. Etiam dictum libero et purus. In tincidunt accumsan nibh. Morbi nibh diam, ornare eget, sollicitudin ut, facilisis eu, eros. 
-		Vivamus augue. Phasellus non pede. Phasellus massa est, mattis sed, pharetra non, mollis sit amet, purus&hellip;</p>
-		<a class="more" href="#">Read more</a>
-		</div>
-
-		<div class="article-zebra"><p>Nulla facilisi. Etiam dictum libero et purus. In tincidunt accumsan nibh. Morbi nibh diam, ornare eget, sollicitudin ut, facilisis eu, eros. 
-		Vivamus augue. Phasellus non pede. Phasellus massa est, mattis sed, pharetra non, mollis sit amet, purus&hellip;</p>
-		<a class="more" href="#">Read more</a>
-		</div>
-
-<hr class="noscreen" />
-<br />
-
-		<h3><span>Newest photos</span></h3>
-		<div class="gallery">
-		<a href="#"><img src="img/image.jpg" alt="" width="120" height="90" /></a>
-		<a href="#"><img src="img/image.jpg" alt="" width="120" height="90" /></a>
-		<a href="#"><img src="img/image.jpg" alt="" width="120" height="90" /></a>
-		<a href="#"><img src="img/image.jpg" alt="" width="120" height="90" /></a>
-		</div>
 
 		</div>
 		</div> <!-- Right column end -->
@@ -148,6 +101,11 @@
 	});
 
 	$("#distribution").change(function() {
+		if($("#distribution").val() == 0)
+			$("#parameters").hide();
+		else
+			$("#parameters").show();
+		
 		switch($("#distribution").val()) {
 		case '1':
 			$("label[for=parameter1]").text("p = ");
@@ -184,7 +142,7 @@
 			$("#parameter2").show();
 			$("#parameter3").show();
 			break;
-		default:
+		case '6':
 			$("label[for=parameter1]").text("μ = ");
 			$("label[for=parameter2]").empty();
 			$("label[for=parameter3]").empty();
