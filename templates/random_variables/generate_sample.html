@@ -48,73 +48,44 @@
 		<div class="col-r">
 		<div class="col-r-in">
 		<h2>Генериране на извадка</h2>
+		<p>
 		<form action="/generate_sample/" method="post">
 		{% csrf_token %}
-		Разпределение:
-		<select name="distribution_id" id="distribution">
-		<option value="1">Бернулиево разпределение</option>
-		<option value="2">Биномно разпределение</option>
-		<option value="3">Геометрично разпределение</option>
-		<option value="4">Отрицателно биномно разпределение</option>
-		<option value="5">Хипергеометрично разпределение</option>
-		<option value="6">Поасоново разпределение</option>
-		</select>
+		{{ error_message }}
 		<br />
-		<label for="parameter1"></label><input type="text" id="parameter1" name="distribution_parameter1" />
-		<label for="parameter2"></label><input type="text" id="parameter2" name="distribution_parameter2"/>
-		<label for="parameter3"></label><input type="text" id="parameter3" name="distribution_parameter3"/>
+		Разпределение: {{ form.distribution_id }}
 		<br />
-		Обем на извадката: <input type="text" name="count" />
+		<div id="parameters">
+			<label for="parameter1"></label>{{ form.distribution_parameter1 }}<br />
+			<label for="parameter2"></label>{{ form.distribution_parameter2 }}<br />
+			<label for="parameter3"></label>{{ form.distribution_parameter3 }}<br />
+		</div>
+		<div id="custom_distribution">
+		<table>
+		<tr>
+		<td>Стойности:</td>
+		<td>{{ form.values }}</td>
+		</tr>
+		<tr>
+		<td>Вероятности:</td>
+		<td>{{ form.probabilities }}</td>
+		</tr>
+		</table>
+		</div>
+		Обем на извадката: {{ form.count }}
 		<br />
 		<input type="submit" value="Генерирай" />
 		</form>
-		{% for value in sample %}
+		<p>
+		<hr>
+		<p>
+		{% for value in sample.result %}
 			{{ value }}
 		{% endfor %}
 		<br />
-		Оценка на очакването: {{ mean }}
+		Оценка на очакването: {{ sample.mean }}
 		<br />
-		Оценка на дисперсията: {{ covariance }}
-		<p>Praesent pharetra, risus non vehicula rutrum, elit dui tincidunt felis, eu iaculis urna dolor non purus. Praesent eget orci. 
-		Praesent aliquet. Vestibulum ante <a href="#">ipsum primis</a> in faucibus orci luctus et ultrices posuere cubilia Curae; Nulla purus. 
-		Nullam quam enim, congue tempor, gravida id, suscipit eget, magna. Donec urna. Aliquam est purus, condimentum nec, rutrum ac, vulputate sit amet, justo. 
-		Etiam dui. Nam vulputate. Maecenas placerat ultricies massa. Nam nisi. Nullam dignissim, odio dignissim accumsan fermentum, sapien magna porttitor orci, 
-		non lacinia elit pede id dui. Sed sit amet massa vitae tellus adipiscing laoreet.</p>
-
-<hr class="noscreen" />
-<br />
-
-		<h3><span>Latest articles</span></h3>
-		<div class="article"><p>Nulla facilisi. Etiam dictum libero et purus. In tincidunt accumsan nibh. Morbi nibh diam, ornare eget, sollicitudin ut, facilisis eu, eros. 
-		Vivamus augue. Phasellus non pede. Phasellus massa est, mattis sed, pharetra non, mollis sit amet, purus&hellip;</p>
-		<a class="more" href="#">Read more</a>
-		</div>
-
-		<div class="article-zebra"><p>Nulla facilisi. Etiam dictum libero et purus. In tincidunt accumsan nibh. Morbi nibh diam, ornare eget, sollicitudin ut, facilisis eu, eros. 
-		Vivamus augue. Phasellus non pede. Phasellus massa est, mattis sed, pharetra non, mollis sit amet, purus&hellip;</p>
-		<a class="more" href="#">Read more</a>
-		</div>
-
-		<div class="article"><p>Nulla facilisi. Etiam dictum libero et purus. In tincidunt accumsan nibh. Morbi nibh diam, ornare eget, sollicitudin ut, facilisis eu, eros. 
-		Vivamus augue. Phasellus non pede. Phasellus massa est, mattis sed, pharetra non, mollis sit amet, purus&hellip;</p>
-		<a class="more" href="#">Read more</a>
-		</div>
-
-		<div class="article-zebra"><p>Nulla facilisi. Etiam dictum libero et purus. In tincidunt accumsan nibh. Morbi nibh diam, ornare eget, sollicitudin ut, facilisis eu, eros. 
-		Vivamus augue. Phasellus non pede. Phasellus massa est, mattis sed, pharetra non, mollis sit amet, purus&hellip;</p>
-		<a class="more" href="#">Read more</a>
-		</div>
-
-<hr class="noscreen" />
-<br />
-
-		<h3><span>Newest photos</span></h3>
-		<div class="gallery">
-		<a href="#"><img src="img/image.jpg" alt="" width="120" height="90" /></a>
-		<a href="#"><img src="img/image.jpg" alt="" width="120" height="90" /></a>
-		<a href="#"><img src="img/image.jpg" alt="" width="120" height="90" /></a>
-		<a href="#"><img src="img/image.jpg" alt="" width="120" height="90" /></a>
-		</div>
+		Оценка на дисперсията: {{ sample.covariance }}
 
 		</div>
 		</div> <!-- Right column end -->
@@ -146,53 +117,61 @@
 </html>
 
 <script>
-	$(function() {
-		$("#distribution").trigger("change");
-	});
+$(function() {
+	$("#distribution_id").trigger("change");
+});
 
-	$("#distribution").change(function() {
-		switch($("#distribution").val()) {
-		case '1':
-			$("label[for=parameter1]").text("p = ");
-			$("label[for=parameter2]").empty();
-			$("label[for=parameter3]").empty();
-			$("#parameter2").hide();
-			$("#parameter3").hide();
-			break;
-		case '2':
-			$("label[for=parameter1]").text("n = ");
-			$("label[for=parameter2]").text("p = ");
-			$("label[for=parameter3]").empty();
-			$("#parameter2").show();
-			$("#parameter3").hide();
-			break;
-		case '3':
-			$("label[for=parameter1]").text("p = ");
-			$("label[for=parameter2]").empty();
-			$("label[for=parameter3]").empty();
-			$("#parameter2").hide();
-			$("#parameter3").hide();
-			break;
-		case '4':
-			$("label[for=parameter1]").text("r = ");
-			$("label[for=parameter2]").text("p = ");
-			$("label[for=parameter3]").empty();
-			$("#parameter2").show();
-			$("#parameter3").hide();
-			break;
-		case '5':
-			$("label[for=parameter1]").text("N = ");
-			$("label[for=parameter2]").text("M = ");
-			$("label[for=parameter3]").text("n = ");
-			$("#parameter2").show();
-			$("#parameter3").show();
-			break;
-		default:
-			$("label[for=parameter1]").text("μ = ");
-			$("label[for=parameter2]").empty();
-			$("label[for=parameter3]").empty();
-			$("#parameter2").hide();
-			$("#parameter3").hide();
-		}
-	});
+$("#distribution_id").change(function() {
+	if($("#distribution_id").val() == 0) {
+		$("#parameters").hide();
+		$("#custom_distribution").show();
+	}
+	else {
+		$("#parameters").show();
+		$("#custom_distribution").hide();
+	}
+	switch($("#distribution_id").val()) {
+	case '1':
+		$("label[for=parameter1]").text("p = ");
+		$("label[for=parameter2]").empty();
+		$("label[for=parameter3]").empty();
+		$("#parameter2").hide();
+		$("#parameter3").hide();
+		break;
+	case '2':
+		$("label[for=parameter1]").text("n = ");
+		$("label[for=parameter2]").text("p = ");
+		$("label[for=parameter3]").empty();
+		$("#parameter2").show();
+		$("#parameter3").hide();
+		break;
+	case '3':
+		$("label[for=parameter1]").text("p = ");
+		$("label[for=parameter2]").empty();
+		$("label[for=parameter3]").empty();
+		$("#parameter2").hide();
+		$("#parameter3").hide();
+		break;
+	case '4':
+		$("label[for=parameter1]").text("r = ");
+		$("label[for=parameter2]").text("p = ");
+		$("label[for=parameter3]").empty();
+		$("#parameter2").show();
+		$("#parameter3").hide();
+		break;
+	case '5':
+		$("label[for=parameter1]").text("N = ");
+		$("label[for=parameter2]").text("M = ");
+		$("label[for=parameter3]").text("n = ");
+		$("#parameter2").show();
+		$("#parameter3").show();
+		break;
+	case '6':
+		$("label[for=parameter1]").text("μ = ");
+		$("label[for=parameter2]").empty();
+		$("label[for=parameter3]").empty();
+		$("#parameter2").hide();
+		$("#parameter3").hide();
+	}
+});
 </script>

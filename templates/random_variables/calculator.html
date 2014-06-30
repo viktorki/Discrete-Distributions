@@ -1,0 +1,171 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Преглед на задачите</title>
+
+<meta name="Description" content="" />
+<meta name="author" content="" />
+<meta name="keywords" content="" />
+
+<meta name="robots" content="all,follow" />
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+{% load staticfiles %}
+
+<!-- CSS --> 
+<link rel="stylesheet" href="{% static "styles/default.css" %}" type="text/css" media="screen, projection, tv" />
+<link rel="stylesheet" href="{% static "styles/print.css" %}" type="text/css" media="print" />
+
+<!-- Favicon -->
+<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+</head>
+
+<body id="top">
+<div id="wrapper">
+
+	<div class="header">
+	<h1><span><a href="">Дискретни разпределения</span></h1>
+	<p id="about">Уеб приложение за работа със случайни величини</p>
+
+	<a href="#skip-menu" class="hidden">Skip menu</a> <!-- Skip menu -->
+	<div id="menu-box"><ul id="web"><li><a href="#">Ресурси</a></li> <li><a class="active" id="first" href="../">Начало</a></li></ul></div>
+
+	<form class="searching" action="">
+		<fieldset>
+			<label></label>
+				<input type="text" name="as_q" class="search" />
+				<input class="hledat" type="submit" name="" value="Търсене" />
+		</fieldset>
+	</form>
+	</div> <!-- Header end -->
+
+<hr class="noscreen" />
+
+<div id="skip-menu"></div>
+	<div class="page">
+		<div class="col-r">
+		<div class="col-r-in">
+		<h2>Калкулатор</h2>
+		<p>
+		<form action="/calculator/" method="post">
+		{% csrf_token %}
+		{{ error_message }}
+		<br />
+		Разпределение: {{ form.distribution_id }}
+		<br />
+		<div id="parameters">
+			<label for="parameter1"></label>{{ form.distribution_parameter1 }}<br />
+			<label for="parameter2"></label>{{ form.distribution_parameter2 }}<br />
+			<label for="parameter3"></label>{{ form.distribution_parameter3 }}<br />
+		</div>
+		<div id="custom_distribution">
+		<table>
+		<tr>
+		<td>Стойности:</td>
+		<td>{{ form.values }}</td>
+		</tr>
+		<tr>
+		<td>Вероятности:</td>
+		<td>{{ form.probabilities }}</td>
+		</tr>
+		</table>
+		</div>
+		<input type="submit" value="Покажи данни" />
+		</form>
+		<p>
+		<hr>
+		<p>
+		Очакване: E = {{ randomVariable.expectation }}
+		<br />
+		Дисперсия: D = {{ randomVariable.variance }}
+		
+		</div>
+		</div> <!-- Right column end -->
+
+{% include "menu.html" %}
+
+<div class="cleaner">&nbsp;</div>
+
+	</div> <!-- Page end -->
+
+	<div id="footer">
+		<ul>
+			<li><a href="">Home</a>|</li>
+			<li><a href="#">About</a>|</li>
+			<li><a href="#">Gallery</a>|</li>
+			<li><a href="#">Contact</a></li>
+		</ul>
+
+	<p><a href="#" onclick="print();" title="Javascript needed for a Print">Print</a> | <a href="#top">Top</a>&uarr;</p>
+	</div> <!-- Footer end -->
+
+</div> <!-- Wrapper end -->
+
+<p id="backlinks"><a href="http://www.pestujemeweb.cz/">PД›stujeme web</a> | visit: <a href="http://www.junglegym.cz/" title="Skluzavky Jungle Gym">Skluzavky</a></p>
+
+<div style="margin: 1em 0 1em 0; text-align: center;">
+</div>
+</body>
+</html>
+
+<script>
+$(function() {
+	$("#distribution_id").trigger("change");
+});
+
+$("#distribution_id").change(function() {
+	if($("#distribution_id").val() == 0) {
+		$("#parameters").hide();
+		$("#custom_distribution").show();
+	}
+	else {
+		$("#parameters").show();
+		$("#custom_distribution").hide();
+	}
+	switch($("#distribution_id").val()) {
+	case '1':
+		$("label[for=parameter1]").text("p = ");
+		$("label[for=parameter2]").empty();
+		$("label[for=parameter3]").empty();
+		$("#parameter2").hide();
+		$("#parameter3").hide();
+		break;
+	case '2':
+		$("label[for=parameter1]").text("n = ");
+		$("label[for=parameter2]").text("p = ");
+		$("label[for=parameter3]").empty();
+		$("#parameter2").show();
+		$("#parameter3").hide();
+		break;
+	case '3':
+		$("label[for=parameter1]").text("p = ");
+		$("label[for=parameter2]").empty();
+		$("label[for=parameter3]").empty();
+		$("#parameter2").hide();
+		$("#parameter3").hide();
+		break;
+	case '4':
+		$("label[for=parameter1]").text("r = ");
+		$("label[for=parameter2]").text("p = ");
+		$("label[for=parameter3]").empty();
+		$("#parameter2").show();
+		$("#parameter3").hide();
+		break;
+	case '5':
+		$("label[for=parameter1]").text("N = ");
+		$("label[for=parameter2]").text("M = ");
+		$("label[for=parameter3]").text("n = ");
+		$("#parameter2").show();
+		$("#parameter3").show();
+		break;
+	case '6':
+		$("label[for=parameter1]").text("μ = ");
+		$("label[for=parameter2]").empty();
+		$("label[for=parameter3]").empty();
+		$("#parameter2").hide();
+		$("#parameter3").hide();
+	}
+});
+</script>
