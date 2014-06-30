@@ -1,5 +1,7 @@
 import math
+import random
 from Utility.Math import Combinatorics
+
 class DiscreteDistribution:
     def __init__(self, probability_density_function, expectation = 0, variance = 0):
         self.probability_density_function = probability_density_function
@@ -23,7 +25,9 @@ class BinomialDistribution(DiscreteDistribution):
         self.n = n
         self.p = p
         self.q = 1 - p
-        self.id = 1
+    
+    name = "Биномно разпределение"
+    parameter_count = 2
 
 
 class BernoulliDistribution(DiscreteDistribution):
@@ -31,7 +35,9 @@ class BernoulliDistribution(DiscreteDistribution):
         DiscreteDistribution.__init__(self, lambda k: p ** k * (1 - p) ** (1 - k), p, p * (1 - p))
         self.p = p
         self.q = 1 - p
-        self.id = 2
+    
+    name = "Бернулиево разпределение"
+    parameter_count = 1
 
 
 class GeometricDistribution(DiscreteDistribution):
@@ -39,7 +45,9 @@ class GeometricDistribution(DiscreteDistribution):
         DiscreteDistribution.__init__(self, lambda k: p * (1 - p) ** k, (1 - p) / p, (1 - p) / (p ** 2))
         self.p = p
         self.q = 1 - p
-        self.id = 3
+    
+    name = "Геометрично разпределение"
+    parameter_count = 1
 
 
 class NegativeBinomialDistribution(DiscreteDistribution):
@@ -48,7 +56,9 @@ class NegativeBinomialDistribution(DiscreteDistribution):
         self.r = r
         self.p = p
         self.q = 1 - p
-        self.id = 4
+    
+    name = "Отрицателно биномно разпределение"
+    parameter_count = 2
 
 
 class HypergeometricDistribution(DiscreteDistribution):
@@ -57,10 +67,18 @@ class HypergeometricDistribution(DiscreteDistribution):
         self.N = N
         self.M = M
         self.n = n
-        self.id = 5
+    
+    name = "Хипергеометрично разпределение"
+    parameter_count = 3
+
 
 class PoissonDistribution(DiscreteDistribution):
     def __init__(self, mu):
         DiscreteDistribution.__init__(self, lambda k: mu ** k * math.e ** (-mu) / math.factorial(k), mu, mu)
         self.mu = mu
-        self.id = 6
+        
+    def timeUntilNextOccurrence(self):
+        return -math.log(1 - random.random()) / self.mu
+    
+    name = "Поасоново разпределение"
+    parameter_count = 1
