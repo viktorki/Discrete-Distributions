@@ -1,0 +1,140 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Преглед на задачите</title>
+
+<meta name="Description" content="" />
+<meta name="author" content="" />
+<meta name="keywords" content="" />
+
+<meta name="robots" content="all,follow" />
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+{% load staticfiles %}
+
+<!-- CSS --> 
+<link rel="stylesheet" href="{% static "styles/default.css" %}" type="text/css" media="screen, projection, tv" />
+<link rel="stylesheet" href="{% static "styles/print.css" %}" type="text/css" media="print" />
+
+<!-- Favicon -->
+<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+</head>
+
+<body id="top">
+<div id="wrapper">
+
+	<div class="header">
+	<h1><span><a href="">Дискретни разпределения</span></h1>
+	<p id="about">Уеб приложение за работа със случайни величини</p>
+
+	<a href="#skip-menu" class="hidden">Skip menu</a> <!-- Skip menu -->
+	<div id="menu-box"><ul id="web"><li><a href="#">Ресурси</a></li> <li><a class="active" id="first" href="../">Начало</a></li></ul></div>
+
+	<form class="searching" action="">
+		<fieldset>
+			<label></label>
+				<input type="text" name="as_q" class="search" />
+				<input class="hledat" type="submit" name="" value="Търсене" />
+		</fieldset>
+	</form>
+	</div> <!-- Header end -->
+
+<hr class="noscreen" />
+
+<div id="skip-menu"></div>
+	<div class="page">
+		<div class="col-r">
+		<div class="col-r-in">
+		<h2>Биномно разпределение</h2>
+		<p>
+		<h3><span>Постановка на задачата</span></h3>
+		Хвърляме монета <i>n</i> пъти.
+		Вероятността да се падне лице е <i>p</i>, а вероятността да се падне гръб е <i>1 - p</i>.
+		Разглеждаме броя на падналите се лица.
+		Тази величина е биномно разпределена.
+		<p>
+		<h3><span>Симулация</span></h3>
+		<form action="/binomial_distribution/" method="post">
+		{% csrf_token %}
+		Тип монета:
+		{{ form.isFair }}
+		<br />
+		p = {{ form.probability }}
+		<br />
+		Брой монети: {{ form.count }}
+		<br />
+		<input type="submit" value="Започни опита" id="submit" />
+		</form>
+		
+		<br />
+		{% if sample != None %}
+			<input type="button" id="next" value="Хвърли" />
+		{% endif %}
+		<br />
+		{% for id, result in sample %}
+			{% if result == 1 %}
+				<img src="{% static "img/coin_obverse.png" %}" id="{{ id }}" width="100" hidden="true" />
+			{% else %}
+				<img src="{% static "img/coin_reverse.png" %}" id="{{ id }}" width="100" hidden="true" />
+			{% endif %}
+		{% endfor %}
+
+		</div>
+		</div> <!-- Right column end -->
+
+{% include "menu.html" %}
+
+<div class="cleaner">&nbsp;</div>
+
+	</div> <!-- Page end -->
+
+	<div id="footer">
+		<ul>
+			<li><a href="">Home</a>|</li>
+			<li><a href="#">About</a>|</li>
+			<li><a href="#">Gallery</a>|</li>
+			<li><a href="#">Contact</a></li>
+		</ul>
+
+	<p><a href="#" onclick="print();" title="Javascript needed for a Print">Print</a> | <a href="#top">Top</a>&uarr;</p>
+	</div> <!-- Footer end -->
+
+</div> <!-- Wrapper end -->
+
+<p id="backlinks"><a href="http://www.pestujemeweb.cz/">PД›stujeme web</a> | visit: <a href="http://www.junglegym.cz/" title="Skluzavky Jungle Gym">Skluzavky</a></p>
+
+<div style="margin: 1em 0 1em 0; text-align: center;">
+</div>
+</body>
+</html>
+
+<script>
+$(function() {
+	current = 0;
+	$("input[name=isFair]").trigger("change");
+});
+
+$("input[name=isFair]").change(function() {
+	if($("input[name=isFair]:checked").val() == "true") {
+		$("#probability").val("0.5");
+		$("#probability").attr("disabled", "disabled");
+	}
+	else {
+		$("#probability").val("");
+		$("#probability").removeAttr("disabled");
+	}
+});
+
+$("#submit").click(function() {
+	$("#probability").removeAttr("disabled");
+});
+
+$("#next").click(function() {
+	if(current == {{ count }} - 1)
+		$("#next").attr("disabled", "disabled");
+	$("#" + current).show();
+	current++;
+});
+</script>
