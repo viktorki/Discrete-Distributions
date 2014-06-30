@@ -15,11 +15,11 @@ class Combinatorics:
 class Set:
     @classmethod
     def randomSubset(cls, n, m):
-        result = [(i, 0) for i in range(n)]
+        result = [0 for _ in range(n)]
         generated = 0
         while generated < m:
             position = int(n * random.random())
-            if result[position] == (position, 0):
-                result[position] = (position, 1)
+            if result[position] == 0:
+                result[position] = 1
                 generated += 1
         return result
